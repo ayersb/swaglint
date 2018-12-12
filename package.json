@@ -1,6 +1,6 @@
 {
 	"name": "swaglint",
-	"version": "0.1.5",
+	"version": "0.1.6",
 	"description": "Yet another swagger linter",
 	"main": "./lib/index.js",
 	"typings": "./lib/index.d.ts",
@@ -40,7 +40,7 @@
 		"chalk": "^1.1",
 		"commander": "^2.9",
 		"concat-stream": "^1.6",
-		"sway": "apigee-127/sway#cbc1dd184a50f833f2c85cb5cc748213dcb0c55d",
+		"sway": "^2.0.5",
 		"text-table": "^0.2",
 		"yaml-js": "^0.1"
 	},
