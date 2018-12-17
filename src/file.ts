@@ -1,4 +1,3 @@
-
 import { readFileSync } from 'fs';
 
 export interface FileSource {
@@ -41,6 +40,11 @@ export class File {
 	 * Determine if the file is a swagger specification.
 	 */
 	public isSwagger(): boolean {
-		return /^["']?swagger["']?\s*:\s*["']?\d+\.\d+["']?/i.test(this.getContents());
+		const header = this.getContents()
+			.slice(0, 1000)
+			.split(/\n/)
+			.slice(0, 3);
+		const pattern = /^["']?swagger["']?\s*:\s*["']?\d+\.\d+["']?/i;
+
+		return header.some(line => pattern.test(line));
 	}
-}
