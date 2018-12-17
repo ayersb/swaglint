@@ -33,11 +33,13 @@ export class Linter {
 				return reject(new Error('File(s) are not swagger documents'));
 			}
 
-			Promise
-				.all(files.map(file => validator.getIssues(file)))
+			Promise.all(files.map(file => validator.getIssues(file)))
 				.then(validateIssues => {
-					Promise
-						.all(files.map((file, index) => parser.locateIssues(file, validateIssues[index])))
+					Promise.all(
+						files.map((file, index) =>
+							parser.locateIssues(file, validateIssues[index])
+						)
+					)
 						.then(locatedIssues => {
 							files.forEach((file, index) => {
 								const issues = locatedIssues[index];

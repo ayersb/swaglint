@@ -9,11 +9,26 @@ const terminal = process.stdout;
 program
 	.version(pkg.version)
 	.usage('<file ...> [options]')
-	.option('-p, --parser [name]', 'Parser\'s [name] to locate issues within the source', 'yaml')
-	.option('-r, --reporter [name]', 'Reporter\'s [name] to format and report all encountered issues', 'stylish')
-	.option('-v, --validator [name]', 'Validator\'s [name] to validate the swagger syntax', 'sway')
+	.option(
+		'-p, --parser [name]',
+		"Parser's [name] to locate issues within the source",
+		'yaml'
+	)
+	.option(
+		'-r, --reporter [name]',
+		"Reporter's [name] to format and report all encountered issues",
+		'stylish'
+	)
+	.option(
+		'-v, --validator [name]',
+		"Validator's [name] to validate the swagger syntax",
+		'sway'
+	)
 	.option('--stdin', 'If the linter should use STDIN instead of files')
-	.option('--stdin-filename [name]', 'The filename to use when validating from STDIN');
+	.option(
+		'--stdin-filename [name]',
+		'The filename to use when validating from STDIN'
+	);
 
 program.on('--help', () => {
 	const lines = [
@@ -22,7 +37,7 @@ program.on('--help', () => {
 		'    $ swaglint swagger.yml',
 		'    $ swaglint partial.yml other.yml',
 		'    $ cat cool-api.yml | swaglint --stdin',
-		'',
+		''
 	];
 
 	lines.forEach(line => terminal.write(`${line}\n`));
@@ -37,15 +52,12 @@ const linter = new Linter()
 
 if (program.stdin) {
 	process.stdin.pipe(
-		concatStream(
-			{ encoding: 'string' },
-			contents => {
-				linter
-					.addFile({ contents, path: program.stdinFilename })
-					.run(terminal)
-					.catch(message => terminal.write(`${message}\n`));
-			}
-		)
+		concatStream({ encoding: 'string' }, contents => {
+			linter
+				.addFile({ contents, path: program.stdinFilename })
+				.run(terminal)
+				.catch(message => terminal.write(`${message}\n`));
+		})
 	);
 } else if (program.args.length) {
 	for (const path of program.args) {

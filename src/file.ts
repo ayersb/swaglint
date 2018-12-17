@@ -48,3 +48,4 @@ export class File {
 
 		return header.some(line => pattern.test(line));
 	}
+}
